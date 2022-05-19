@@ -1,4 +1,6 @@
 import React from "react";
+import db from "../config/firebase";
+import { collection, addDoc } from "firebase/firestore";
 
 function App() {
   return (
