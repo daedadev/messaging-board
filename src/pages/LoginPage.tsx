@@ -1,5 +1,10 @@
 import React from "react";
+import Form from "../components/LoginSignup/Form";
 
 export default function LoginPage() {
-  return <div>Login</div>;
+  return (
+    <section>
+      <Form />
+    </section>
+  );
 }

@@ -8,8 +8,10 @@ function App() {
   return (
     <AuthContextProvider>
       <Router>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/login" element={<LoginPage />} />
+        </Routes>
       </Router>
     </AuthContextProvider>
   );
