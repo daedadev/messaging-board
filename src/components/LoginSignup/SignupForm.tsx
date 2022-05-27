@@ -1,38 +1,31 @@
-import React, { useRef, useState, Dispatch, SetStateAction } from "react";
+import React, { useRef, Dispatch, SetStateAction } from "react";
 
 type Props = {
   loginWithGoogle: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  submitSignup: (event: React.MouseEvent<HTMLButtonElement>) => void;
   setEmail: Dispatch<SetStateAction<string | undefined>>;
   setPassword: Dispatch<SetStateAction<string | undefined>>;
   setPasswordConfirm: Dispatch<SetStateAction<string | undefined>>;
   setUsername: Dispatch<SetStateAction<string | undefined>>;
 };
 
-export default function SignupForm({
-  setEmail,
-  setPassword,
-  setPasswordConfirm,
-  setUsername,
-  loginWithGoogle,
-}: Props) {
-  const [loading, setLoading] = useState(false);
-
+export default function SignupForm(props: Props) {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const passwordConfirmRef = useRef<HTMLInputElement>(null);
   const usernameRef = useRef<HTMLInputElement>(null);
 
   function createEmail() {
-    setEmail(emailRef.current?.value);
+    props.setEmail(emailRef.current?.value);
   }
 
   function createPassword() {
-    setPassword(passwordRef.current?.value);
-    setPasswordConfirm(passwordConfirmRef.current?.value);
+    props.setPassword(passwordRef.current?.value);
+    props.setPasswordConfirm(passwordConfirmRef.current?.value);
   }
 
   function createUsername() {
-    setUsername(usernameRef.current?.value);
+    props.setUsername(usernameRef.current?.value);
   }
 
   return (
@@ -45,7 +38,7 @@ export default function SignupForm({
       </label>
       <input
         type="text"
-        className="w-full p-1 mb-5 rounded-md border-2"
+        className="flex w-full p-1 mb-5 rounded-md border-2 items-center justify-center"
         ref={emailRef}
         onChange={createEmail}
       ></input>
@@ -80,14 +73,13 @@ export default function SignupForm({
         <button
           type="submit"
           className="flex md:w-[45%] w-full items-center justify-evenly text-slate-300 bg-slate-800 p-2 border-0 rounded-md mb-5"
-          disabled={loading}
-          onClick={() => setLoading(true)}
+          onClick={props.submitSignup}
         >
           Sign Up
         </button>
         <button
           className="flex md:w-[45%] w-full items-center justify-evenly text-slate-300 bg-slate-800 p-2 border-0 rounded-md mb-5"
-          onClick={loginWithGoogle}
+          onClick={props.loginWithGoogle}
           type="button"
         >
           <img

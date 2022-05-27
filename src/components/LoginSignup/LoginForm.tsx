@@ -2,25 +2,25 @@ import React, { useRef, useState, Dispatch, SetStateAction } from "react";
 
 type Props = {
   loginWithGoogle: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  setEmail: Dispatch<SetStateAction<string | undefined>>;
+  submitLogin: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  setUsername: Dispatch<SetStateAction<string | undefined>>;
   setPassword: Dispatch<SetStateAction<string | undefined>>;
 };
 
 export default function LoginForm({
-  setEmail,
+  setUsername,
   setPassword,
   loginWithGoogle,
+  submitLogin,
 }: Props) {
-  const [loading, setLoading] = useState(false);
-
-  const emailRef = useRef<HTMLInputElement>(null);
+  const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
-  function updateEmail() {
-    setEmail(emailRef.current?.value);
+  function inputUsername() {
+    setUsername(usernameRef.current?.value);
   }
 
-  function updatePassword() {
+  function inputPassword() {
     setPassword(passwordRef.current?.value);
   }
 
@@ -30,13 +30,13 @@ export default function LoginForm({
         Log In
       </div>
       <label className="w-full text-left text-slate-300 font-semibold">
-        Email
+        Username
       </label>
       <input
         type="text"
         className="w-full p-1 mb-10 rounded-md border-2"
-        ref={emailRef}
-        onChange={updateEmail}
+        ref={usernameRef}
+        onChange={inputUsername}
       ></input>
       <label className="w-full text-left text-slate-300 font-semibold">
         Password
@@ -45,14 +45,13 @@ export default function LoginForm({
         type="password"
         className="w-full p-1 mb-16 rounded-md border-2"
         ref={passwordRef}
-        onChange={updatePassword}
+        onChange={inputPassword}
       ></input>
       <div className="flex md:flex-row flex-col w-full justify-evenly">
         <button
           type="submit"
           className="flex md:w-[45%] w-full items-center justify-evenly text-slate-300 bg-slate-800 p-2 border-0 rounded-md mb-5"
-          disabled={loading}
-          onClick={() => setLoading(true)}
+          onClick={submitLogin}
         >
           Log In
         </button>
