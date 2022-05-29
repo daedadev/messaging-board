@@ -1,10 +1,14 @@
-import React, { useState, useRef, useContext } from "react";
-import { db, auth, googlePopup } from "../../config/firebase";
-import { collection, doc, getDocs, setDoc } from "firebase/firestore";
+import React, { useState } from "react";
+import { auth, googlePopup } from "../../config/firebase";
 import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
 import { useAuth } from "../../context/AuthContext";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  updateProfile,
+} from "firebase/auth";
 
 type Error = {
   title: string;
@@ -30,19 +34,21 @@ export default function Form() {
     });
   }
 
-  function loginWithUsername() {
-    const user = {
-      username: username,
-      password: password,
-    };
-    console.log(user);
+  function loginWithEmail() {
+    console.log("bruh");
+    signInWithEmailAndPassword(auth, email as string, password as string);
   }
 
-  function signupWithEmail(email: string, password: string, userName: string) {
-    return createUserWithEmailAndPassword(auth, email, password)
+  async function signupWithEmail() {
+    console.log("bruh");
+    return createUserWithEmailAndPassword(
+      auth,
+      email as string,
+      password as string
+    )
       .then((result) => {
         return updateProfile(result.user, {
-          displayName: userName,
+          displayName: username,
         }).then(() => {
           updateProfile(result.user, {
             photoURL:
@@ -61,9 +67,9 @@ export default function Form() {
         {loginBool ? (
           <LoginForm
             setPassword={setPassword}
-            setUsername={setUsername}
+            setEmail={setEmail}
             loginWithGoogle={loginWithGoogle}
-            submitLogin={loginWithUsername}
+            submitLogin={loginWithEmail}
           />
         ) : (
           <SignupForm

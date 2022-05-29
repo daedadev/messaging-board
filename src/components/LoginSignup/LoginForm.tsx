@@ -1,27 +1,22 @@
-import React, { useRef, useState, Dispatch, SetStateAction } from "react";
+import React, { useRef, Dispatch, SetStateAction } from "react";
 
 type Props = {
   loginWithGoogle: (event: React.MouseEvent<HTMLButtonElement>) => void;
   submitLogin: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  setUsername: Dispatch<SetStateAction<string | undefined>>;
+  setEmail: Dispatch<SetStateAction<string | undefined>>;
   setPassword: Dispatch<SetStateAction<string | undefined>>;
 };
 
-export default function LoginForm({
-  setUsername,
-  setPassword,
-  loginWithGoogle,
-  submitLogin,
-}: Props) {
-  const usernameRef = useRef<HTMLInputElement>(null);
+export default function LoginForm(props: Props) {
+  const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
-  function inputUsername() {
-    setUsername(usernameRef.current?.value);
+  function inputEmail() {
+    props.setEmail(emailRef.current?.value);
   }
 
   function inputPassword() {
-    setPassword(passwordRef.current?.value);
+    props.setPassword(passwordRef.current?.value);
   }
 
   return (
@@ -30,13 +25,13 @@ export default function LoginForm({
         Log In
       </div>
       <label className="w-full text-left text-slate-300 font-semibold">
-        Username
+        Email
       </label>
       <input
         type="text"
         className="w-full p-1 mb-10 rounded-md border-2"
-        ref={usernameRef}
-        onChange={inputUsername}
+        ref={emailRef}
+        onChange={inputEmail}
       ></input>
       <label className="w-full text-left text-slate-300 font-semibold">
         Password
@@ -51,13 +46,13 @@ export default function LoginForm({
         <button
           type="submit"
           className="flex md:w-[45%] w-full items-center justify-evenly text-slate-300 bg-slate-800 p-2 border-0 rounded-md mb-5"
-          onClick={submitLogin}
+          onClick={props.submitLogin}
         >
           Log In
         </button>
         <button
           className="flex md:w-[45%] w-full items-center justify-evenly text-slate-300 bg-slate-800 p-2 border-0 rounded-md mb-5"
-          onClick={loginWithGoogle}
+          onClick={props.loginWithGoogle}
           type="button"
         >
           <img

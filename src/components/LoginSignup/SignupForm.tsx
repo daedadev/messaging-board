@@ -2,7 +2,7 @@ import React, { useRef, Dispatch, SetStateAction } from "react";
 
 type Props = {
   loginWithGoogle: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  submitSignup: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  submitSignup: () => Promise<void>;
   setEmail: Dispatch<SetStateAction<string | undefined>>;
   setPassword: Dispatch<SetStateAction<string | undefined>>;
   setPasswordConfirm: Dispatch<SetStateAction<string | undefined>>;
@@ -26,6 +26,12 @@ export default function SignupForm(props: Props) {
 
   function createUsername() {
     props.setUsername(usernameRef.current?.value);
+  }
+
+  function completeSignup() {
+    if (passwordRef.current?.value === passwordConfirmRef.current?.value) {
+      props.submitSignup();
+    }
   }
 
   return (
@@ -73,7 +79,7 @@ export default function SignupForm(props: Props) {
         <button
           type="submit"
           className="flex md:w-[45%] w-full items-center justify-evenly text-slate-300 bg-slate-800 p-2 border-0 rounded-md mb-5"
-          onClick={props.submitSignup}
+          onClick={(e) => completeSignup()}
         >
           Sign Up
         </button>
